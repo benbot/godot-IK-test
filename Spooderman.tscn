@@ -1,0 +1,106 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Spiderplznobreak.glb" type="PackedScene" id=1]
+[ext_resource path="res://Spatial.gd" type="Script" id=2]
+[ext_resource path="res://targets.gd" type="Script" id=3]
+[ext_resource path="res://Spider.gd" type="Script" id=4]
+
+
+[sub_resource type="Animation" id=1]
+length = 1.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Spider:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5 ),
+"transitions": PoolRealArray( 0.25, 1, 0.392292, 1.86607 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, -0.591825 ), Vector3( 0, 0, 0.322151 ), Vector3( 0, 0, 0 ) ]
+}
+
+[node name="Spoooder" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="Spider" parent="." instance=ExtResource( 1 )]
+script = ExtResource( 4 )
+
+[node name="Body" parent="Spider" index="0"]
+transform = Transform( 1.50205, 0, 0, 0, 1.09221, 0, 0, 0, 1.32992, 0, 0.374782, 0.319118 )
+
+[node name="FrontRightLegIK" type="SkeletonIK" parent="Spider/Body/Skele/Skeleton" index="4" groups=[
+"IK",
+]]
+process_priority = 1
+root_bone = "front_right_leg"
+tip_bone = "front_right_target"
+target_node = NodePath("../../../../targets/frontRightLegTarget/position")
+
+[node name="BackLeftLegIK" type="SkeletonIK" parent="Spider/Body/Skele/Skeleton" index="5" groups=[
+"IK",
+]]
+process_priority = 1
+root_bone = "back_left_leg"
+tip_bone = "back_left_target"
+target_node = NodePath("../../../../targets/backLeftLegTarget/position")
+
+[node name="FrontLeftLegIK" type="SkeletonIK" parent="Spider/Body/Skele/Skeleton" index="6" groups=[
+"IK",
+]]
+process_priority = 1
+root_bone = "front_left_leg"
+tip_bone = "front_left_target"
+target_node = NodePath("../../../../targets/frontLeftLegTarget/position")
+
+[node name="BackRightLegIK" type="SkeletonIK" parent="Spider/Body/Skele/Skeleton" index="7" groups=[
+"IK",
+]]
+process_priority = 1
+root_bone = "back_right_leg"
+tip_bone = "back_right_target"
+target_node = NodePath("../../../../targets/backRightLegTarget/position")
+
+[node name="targets" type="Spatial" parent="Spider"]
+script = ExtResource( 3 )
+
+[node name="frontRightLegTarget" type="Spatial" parent="Spider/targets"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.207, 0, -0.248739 )
+
+[node name="position" type="Position3D" parent="Spider/targets/frontRightLegTarget" groups=[
+"targets",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.135519, 0.118634 )
+
+[node name="frontLeftLegTarget" type="Spatial" parent="Spider/targets"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1387, 0, -0.240075 )
+
+[node name="position" type="Position3D" parent="Spider/targets/frontLeftLegTarget" groups=[
+"targets",
+]]
+transform = Transform( 1, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, -0.0115538, -0.0814738 )
+
+[node name="backRightLegTarget" type="Spatial" parent="Spider/targets"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2128, 0, 0.892809 )
+
+[node name="position" type="Position3D" parent="Spider/targets/backRightLegTarget" groups=[
+"targets",
+]]
+
+[node name="backLeftLegTarget" type="Spatial" parent="Spider/targets"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.21284, 0, 0.86753 )
+
+[node name="position" type="Position3D" parent="Spider/targets/backLeftLegTarget" groups=[
+"targets",
+]]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( -0.999419, 0, 0.0340968, 0.0199997, 0.809909, 0.586215, -0.0276153, 0.586556, -0.809438, 0.526292, 11.8907, -7.90566 )
+current = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/wiggle = SubResource( 1 )
+
+[editable path="Spider"]
